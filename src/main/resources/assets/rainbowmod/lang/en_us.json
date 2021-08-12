@@ -1,0 +1,27 @@
+{
+  "item.rainbowmod.red_droplet": "Red Droplet",
+
+  "item.rainbowmod.lens": "Clear Lens",
+  "item.rainbowmod.red_lens": "Red Lens",
+
+  "item.rainbowmod.prism": "Glass Prism",
+
+  "item.rainbowmod.example_item": "Example Item",
+  "message.example_item.tooltip": "Mine with added distance of %s",
+  "message.example_item.change": "Added distance is now %s",
+
+  "block.rainbowmod.example_generator": "Example Generator",
+  "message.example_generator.tooltip": "Generates Forge Power",
+  "screen.rainbowmod.example_generator": "Generator Screen",
+
+  "block.tutorial.demo_block": "Demo Block",
+  "message.demo_block.tooltip": "Fancy Demo Block",
+
+  "block.rainbowmod.primary_converter": "Primary Converter",
+  "message.primary_converter.tooltip": "Converts water to a specific primary color based on installed lens.",
+  "screen.rainbowmod.primary_converter": "Primary Converter Screen",
+
+  "block.rainbowmod.solar_test": "Solar Tester",
+  "message.solar_test.tooltip": "Takes in sunlight and stores it.",
+  "screen.rainbowmod.solar_test": "Solar Tester Screen"
+}
