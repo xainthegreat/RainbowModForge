@@ -1,8 +1,36 @@
 {
   "item.rainbowmod.red_droplet": "Red Droplet",
+  "item.rainbowmod.orange_droplet": "Orange Droplet",
+  "item.rainbowmod.magenta_droplet": "Magenta Droplet",
+  "item.rainbowmod.yellow_droplet": "Yellow Droplet",
+  "item.rainbowmod.lime_droplet": "Lime Droplet",
+  "item.rainbowmod.pink_droplet": "Pink Droplet",
+  "item.rainbowmod.gray_droplet": "Gray Droplet",
+  "item.rainbowmod.cyan_droplet": "Cyan Droplet",
+  "item.rainbowmod.purple_droplet": "Purple Droplet",
+  "item.rainbowmod.blue_droplet": "Blue Droplet",
+  "item.rainbowmod.brown_droplet": "Brown Droplet",
+  "item.rainbowmod.green_droplet": "Green Droplet",
+  "item.rainbowmod.light_blue_droplet": "Light Blue Droplet",
+  "item.rainbowmod.light_gray_droplet": "Light Gray Droplet",
+  "item.rainbowmod.white_droplet": "White Droplet",
+  "item.rainbowmod.black_droplet": "Black Droplet",
 
-  "item.rainbowmod.lens": "Clear Lens",
+  "item.rainbowmod.clear_lens": "Clear Lens",
   "item.rainbowmod.red_lens": "Red Lens",
+  "item.rainbowmod.orange_lens": "Orange Lens",
+  "item.rainbowmod.magenta_lens": "Magenta Lens",
+  "item.rainbowmod.yellow_lens": "Yellow Lens",
+  "item.rainbowmod.lime_lens": "Lime Lens",
+  "item.rainbowmod.pink_lens": "Pink Lens",
+  "item.rainbowmod.gray_lens": "Gray Lens",
+  "item.rainbowmod.cyan_lens": "Cyan Lens",
+  "item.rainbowmod.purple_lens": "Purple Lens",
+  "item.rainbowmod.blue_lens": "Blue Lens",
+  "item.rainbowmod.brown_lens": "Brown Lens",
+  "item.rainbowmod.green_lens": "Green Lens",
+  "item.rainbowmod.light_blue_lens": "Light Blue Lens",
+  "item.rainbowmod.light_gray_lens": "Light Gray Lens",
 
   "item.rainbowmod.prism": "Glass Prism",
 
@@ -23,5 +51,9 @@
 
   "block.rainbowmod.solar_test": "Solar Tester",
   "message.solar_test.tooltip": "Takes in sunlight and stores it.",
-  "screen.rainbowmod.solar_test": "Solar Tester Screen"
+  "screen.rainbowmod.solar_test": "Solar Tester Screen",
+
+  "block.rainbowmod.solar_furnace": "Solar Furnace",
+  "message.solar_furnace.tooltip": "Uses light to smelt items.",
+  "screen.rainbowmod.solar_furnace": "Solar Furnace"
 }

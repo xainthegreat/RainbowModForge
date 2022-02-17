@@ -11,16 +11,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class SolarTestEntity extends BlockEntity {
-// todo left off with solar test not keeping light in block when broken, also when placing a broken block it duplicates...
-    public SolarTestEntity(BlockPos pos, BlockState state) {
+public class SolarFurnaceEntity  extends BlockEntity {
+    // todo left off with solar test not keeping light in block when broken, also when placing a broken block it duplicates...
+    public SolarFurnaceEntity(BlockPos pos, BlockState state) {
         super(Registration.SOLAR_TEST_ENTITY.get(), pos, state);
     }
 
@@ -108,4 +106,6 @@ public class SolarTestEntity extends BlockEntity {
         return super.getCapability(cap, side);
     }
 
+    public void tickClient(BlockState state1) {
+    }
 }

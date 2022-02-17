@@ -6,77 +6,93 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public class LightStorage implements INBTSerializable<Tag> {
 
-    private int maxLight;
-    private int currentLight;
-    private boolean extract;
-    private boolean receive;
+    protected int light;
+    protected int capacity;
+    protected int maxReceive;
+    protected int maxExtract;
 
-    public LightStorage (int max, boolean in, boolean out) {
-        this.setMaxLight(max);
-        this.receive = in;
-        this.extract = out;
+    public LightStorage(int capacity)
+    {
+        this(capacity, capacity, capacity, 0);
     }
 
-    // only use for light generation, not transfer
-    // todo update nameing?
-    public void createLight(int input){
-        int lightReceived = Math.min(getMaxLight() - getCurrentLight(), input);
-        setCurrentLight(getCurrentLight() + lightReceived);
+    public LightStorage(int capacity, int maxTransfer)
+    {
+        this(capacity, maxTransfer, maxTransfer, 0);
     }
 
-    public int addLight(int input) {
-        //todo figure out how to mark the block dirty now?
+    public LightStorage(int capacity, int maxReceive, int maxExtract)
+    {
+        this(capacity, maxReceive, maxExtract, 0);
+    }
+
+    public LightStorage(int capacity, int maxReceive, int maxExtract, int light)
+    {
+        this.capacity = capacity;
+        this.maxReceive = maxReceive;
+        this.maxExtract = maxExtract;
+        this.light = Math.max(0 , Math.min(capacity, light));
+    }
+
+    public void setLight(int light){
+        this.light = light;
+        onLightChanged();
+    }
+
+    public void consumeLight(int light) {
+        this.light -= light;
+        if (this.light < 0) {
+            this.light = 0;
+        }
+        onLightChanged();
+    }
+
+    public int receiveLight(int maxReceive, boolean simulate)
+    {
         if (!canReceive())
             return 0;
 
-        int lightReceived = Math.min(getMaxLight() - getCurrentLight(), input);
-
-        setCurrentLight(getCurrentLight() + lightReceived);
-
+        int lightReceived = Math.min(capacity - light, Math.min(this.maxReceive, maxReceive));
+        if (!simulate)
+            light += lightReceived;
         return lightReceived;
     }
 
-    public void removeLight(int light) {
-        //todo figure out how to mark the block dirty now?
-        int newLight = getCurrentLight() - light;
+    public int extractLight(int maxExtract, boolean simulate)
+    {
+        if (!canExtract())
+            return 0;
 
-        if (newLight < 0) {
-            setCurrentLight(0);
-        } else {
-            setCurrentLight(newLight);
-        }
+        int lightExtracted = Math.min(light, Math.min(this.maxExtract, maxExtract));
+        if (!simulate)
+            light -= lightExtracted;
+        return lightExtracted;
     }
 
-    public int getCurrentLight() {
-        return currentLight;
+    public int getLightStored()
+    {
+        return light;
     }
 
-    public void setCurrentLight(int update) {
-        this.currentLight = update;
-    }
-
-    public int getMaxLight() {
-        return maxLight;
-    }
-
-    public void setMaxLight(int update) {
-        this.maxLight = update;
+    public int getMaxLightStored()
+    {
+        return capacity;
     }
 
     public boolean canExtract()
     {
-        return extract;
+        return this.maxExtract > 0;
     }
 
     public boolean canReceive()
     {
-        return receive;
+        return this.maxReceive > 0;
     }
 
     @Override
     public Tag serializeNBT()
     {
-        return IntTag.valueOf(getCurrentLight());
+        return IntTag.valueOf(this.getLightStored());
     }
 
     @Override
@@ -84,8 +100,10 @@ public class LightStorage implements INBTSerializable<Tag> {
     {
         if (!(nbt instanceof IntTag intNbt))
             throw new IllegalArgumentException("Can not deserialize to an instance that isn't the default implementation");
-        setCurrentLight(intNbt.getAsInt());
+        this.light = intNbt.getAsInt();
     }
 
-    protected void onLightChange() {    }
+    protected void onLightChanged() {
+
+    }
 }

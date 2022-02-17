@@ -6,6 +6,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.Tags;
@@ -51,6 +53,20 @@ public class Recipes extends RecipeProvider {
                 .define('r', Tags.Items.DUSTS_REDSTONE)
                 .group("tutorial")
                 .unlockedBy("redstone", InventoryChangeTrigger.TriggerInstance.hasItems(Items.REDSTONE))
+                .save(consumer);
+
+
+        ShapelessRecipeBuilder.shapeless(Items.WHITE_WOOL)
+                .requires(Tags.Items.DYES_WHITE)
+                .requires(ItemTags.WOOL)
+                .group("Rainbow Mod")
+                .unlockedBy("white", InventoryChangeTrigger.TriggerInstance.hasItems(Registration.WHITE_DROPLET.get()))
+                .save(consumer);
+        ShapelessRecipeBuilder.shapeless(Items.RED_WOOL)
+                .requires(Tags.Items.DYES_RED)
+                .requires(ItemTags.WOOL)
+                .group("Rainbow Mod")
+                .unlockedBy("red", InventoryChangeTrigger.TriggerInstance.hasItems(Registration.RED_DROPLET.get()))
                 .save(consumer);
     }
 }

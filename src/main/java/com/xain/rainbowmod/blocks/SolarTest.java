@@ -78,8 +78,7 @@ public class SolarTest extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> list, TooltipFlag flag) {
-        int light = stack.hasTag() ? stack.getTag().getInt("light") : 0;
-        list.add(new TranslatableComponent("message.solar_test.tooltip", Integer.toString(light)));
+        list.add(new TranslatableComponent("message.solar_test.tooltip"));
     }
 
     @Override

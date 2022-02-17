@@ -26,24 +26,26 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fmllegacy.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-//Tier 1 Converter
-public class PrimaryConverter extends Block implements EntityBlock {
+public class SolarFurnace extends Block implements EntityBlock {
 
-    public PrimaryConverter() {
+    public SolarFurnace() {
         super(Properties.of(Material.STONE)
                 .sound(SoundType.STONE)
-                .strength(2.0f));
+                .strength(2.0f)
+                .harvestTool(ToolType.PICKAXE)
+                .harvestLevel(2));
     }
 
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new PrimaryConverterEntity(pos, state);
+        return new SolarFurnaceEntity(pos, state);
     }
 
     @Nullable
@@ -51,13 +53,13 @@ public class PrimaryConverter extends Block implements EntityBlock {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
         if (level.isClientSide()) {
             return (level1, pos, state1, tile) -> {
-                if (tile instanceof PrimaryConverterEntity entity) {
+                if (tile instanceof SolarFurnaceEntity entity) {
                     entity.tickClient(state1);
                 }
             };
         } else {
             return (level1, pos, state1, tile) -> {
-                if (tile instanceof PrimaryConverterEntity entity) {
+                if (tile instanceof SolarFurnaceEntity entity) {
                     entity.tickServer(state1);
                 }
             };
@@ -77,23 +79,23 @@ public class PrimaryConverter extends Block implements EntityBlock {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable BlockGetter getter, List<Component> list, TooltipFlag flag) {
-        list.add(new TranslatableComponent("message.primary_converter.tooltip"));
+        list.add(new TranslatableComponent("message.solar_furnace.tooltip"));
     }
 
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult trace) {
         if (!level.isClientSide) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof PrimaryConverterEntity) {
+            if (blockEntity instanceof SolarFurnaceEntity) {
                 MenuProvider containerProvider = new MenuProvider() {
                     @Override
                     public Component getDisplayName() {
-                        return new TranslatableComponent("screen.rainbowmod.primary_converter");
+                        return new TranslatableComponent("screen.rainbowmod.solar_furnace");
                     }
 
                     @Override
                     public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player playerEntity) {
-                        return new PrimaryConverterContainer(windowId, level, pos, playerInventory, playerEntity);
+                        return new SolarFurnaceContainer(windowId, level, pos, playerInventory, playerEntity);
                     }
                 };
                 NetworkHooks.openGui((ServerPlayer) player, containerProvider, blockEntity.getBlockPos());

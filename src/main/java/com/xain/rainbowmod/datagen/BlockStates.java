@@ -28,6 +28,7 @@ public class BlockStates extends BlockStateProvider {
         registerDemoBlock();
         registerSolarTestBlock();
         registerPrimaryConverterBlock();
+        registerSolarFurnaceBlock();
     }
 
     private void registerDemoBlock() {
@@ -53,6 +54,15 @@ public class BlockStates extends BlockStateProvider {
                 return modelBlock;
             }
         });
+    }
+
+    private void registerSolarFurnaceBlock() {
+        ResourceLocation side = new ResourceLocation(RainbowMain.MODID, "block/solar_furnace_side");
+        ResourceLocation top = new ResourceLocation(RainbowMain.MODID, "block/solar_furnace_top");
+
+        BlockModelBuilder modelBlock = models().cube("solar_furnace",
+                top, top, new ResourceLocation(RainbowMain.MODID, "block/solar_furnace"), side, side, side);
+        orientedBlock(Registration.EXAMPLE_GENERATOR.get(), state -> modelBlock);
     }
 
     private void orientedBlock(Block block, Function<BlockState, ModelFile> modelFunc) {

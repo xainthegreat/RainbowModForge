@@ -42,6 +42,8 @@ public class LootTables extends LootTableProvider {
                 "example_generator", Registration.EXAMPLE_GENERATOR.get()).setParamSet(LootContextParamSets.BLOCK).build());
         tables.put(Registration.SOLAR_TEST.get().getLootTable(), createStandardTable(
                 "solar_test", Registration.SOLAR_TEST.get()).setParamSet(LootContextParamSets.BLOCK).build());
+        tables.put(Registration.PRIMARY_CONVERTER.get().getLootTable(), createStandardTable(
+                "primary_converter", Registration.PRIMARY_CONVERTER.get()).setParamSet(LootContextParamSets.BLOCK).build());
 //        tables.put(Registration.DEMO.get().getLootTable(), createStandardTable(
 //                "demo", Registration.DEMO.get()).setParamSet(LootContextParamSets.BLOCK).build());
         writeTables(cache, tables);
@@ -56,11 +58,13 @@ public class LootTables extends LootTableProvider {
                         .apply(CopyNameFunction.copyName(CopyNameFunction.NameSource.BLOCK_ENTITY))
                         .apply(CopyNbtFunction.copyData(ContextNbtProvider.BLOCK_ENTITY)
                                 .copy("inv", "BlockEntityTag.inv", CopyNbtFunction.MergeStrategy.REPLACE)
-//                                .copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE) //todo need energy in standard table?
-                                .copy("light", "BlockEntityTag.light", CopyNbtFunction.MergeStrategy.REPLACE))
+                                .copy("light", "BlockEntityTag.light", CopyNbtFunction.MergeStrategy.REPLACE)
+                                .copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE))
                         .apply(SetContainerContents.setContents()
                                 .withEntry(DynamicLoot.dynamicEntry(new ResourceLocation("minecraft", "contents"))))
                 );
+
+//                                .copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE) //todo need energy in standard table?
         return LootTable.lootTable().withPool(builder);
     }
 
@@ -78,6 +82,6 @@ public class LootTables extends LootTableProvider {
 
     @Override
     public String getName() {
-        return "Tutorial LootTables";
+        return "RainbowMod LootTables";
     }
 }

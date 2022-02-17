@@ -2,6 +2,11 @@ package com.xain.rainbowmod;
 
 import com.xain.rainbowmod.setup.ClientSetup;
 import com.xain.rainbowmod.setup.Registration;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class RainbowMain
 {
     public static final String MODID = "rainbowmod";
+
     // Directly reference a log4j logger.
     public static final Logger LOGGER = LogManager.getLogger();
 
@@ -32,5 +38,13 @@ public class RainbowMain
     {
 
     }
+
+    //todo move this into a setup class?
+    public static final CreativeModeTab TAB_RAINBOW = new CreativeModeTab("rainbowmod") {
+        @Override
+        public ItemStack makeIcon() {
+            return new ItemStack(Registration.PRISM.get());
+        }
+    };
 
 }

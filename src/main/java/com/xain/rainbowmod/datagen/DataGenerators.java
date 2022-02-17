@@ -1,8 +1,6 @@
 package com.xain.rainbowmod.datagen;
 
-import com.xain.rainbowmod.RainbowMain;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -17,8 +15,11 @@ public class DataGenerators {
         if (event.includeServer()) {
             generator.addProvider(new Recipes(generator));
             generator.addProvider(new LootTables(generator));
-            generator.addProvider(new Tags.Blocks(generator, event.getExistingFileHelper()));
-            generator.addProvider(new Tags.Items(generator, new BlockTagsProvider(generator, RainbowMain.MODID, event.getExistingFileHelper()), event.getExistingFileHelper()));
+            ModTags.Blocks blockTagProvider = new ModTags.Blocks(generator, event.getExistingFileHelper());
+            generator.addProvider(blockTagProvider);
+            generator.addProvider(new ModTags.Items(generator, blockTagProvider, event.getExistingFileHelper()));
+//            generator.addProvider(new Tags.Blocks(generator, event.getExistingFileHelper()));
+//            generator.addProvider(new Tags.Items(generator, new BlockTagsProvider(generator, RainbowMain.MODID, event.getExistingFileHelper()), event.getExistingFileHelper()));
         }
 
         if (event.includeClient()) {

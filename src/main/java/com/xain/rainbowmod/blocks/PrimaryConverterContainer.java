@@ -43,11 +43,10 @@ public class PrimaryConverterContainer extends AbstractContainerMenu {
             });
         }
         layoutPlayerInventorySlots(10, 70);
-        //trackPower();
+        trackLight();
     }
 
-    // Setup syncing of power from server to client so that the GUI can show the amount of power in the block
-    // TODO update this so that the bars change color while it is converting?
+    // Setup syncing of power from server to client so that the GUI can show the amount of light(mod) in the block
     private void trackLight() {
         // Unfortunatelly on a dedicated server ints are actually truncated to short so we need
         // to split our integer here (split our 32 bit integer into two 16 bit integers)
@@ -60,8 +59,8 @@ public class PrimaryConverterContainer extends AbstractContainerMenu {
             @Override
             public void set(int value) {
                 blockEntity.getCapability(CapabilityLight.LIGHT).ifPresent(h -> {
-                    int lightStored = h.getCurrentLight() & 0xffff0000;
-                    h.setCurrentLight(lightStored + (value & 0xffff));
+                    int lightStored = h.getLightStored() & 0xffff0000;
+                    h.setLight(lightStored + (value & 0xffff));
                 });
             }
         });
@@ -74,15 +73,15 @@ public class PrimaryConverterContainer extends AbstractContainerMenu {
             @Override
             public void set(int value) {
                 blockEntity.getCapability(CapabilityLight.LIGHT).ifPresent(h -> {
-                    int lightStored = h.getCurrentLight() & 0x0000ffff;
-                    h.setCurrentLight(lightStored | (value << 16));
+                    int lightStored = h.getLightStored() & 0x0000ffff;
+                    h.setLight(lightStored | (value << 16));
                 });
             }
         });
     }
 
     public int getLight() {
-        return blockEntity.getCapability(CapabilityLight.LIGHT).map(LightStorage::getCurrentLight).orElse(0);
+        return blockEntity.getCapability(CapabilityLight.LIGHT).map(LightStorage::getLightStored).orElse(0);
     }
 
     @Override
