@@ -27,7 +27,7 @@ displayName="Rainbow Mod" #mandatory
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-logoFile="examplemod.png" #optional
+logoFile="rainbowmod.png" #optional
 # A text field displayed in the mod UI
 credits="Started this project 7/31/2021" #optional
 # A text field displayed in the mod UI
@@ -53,6 +53,6 @@ This mod uses rainbows to create items and do processes.
     modId="minecraft"
     mandatory=true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-    versionRange="[1.17.1,1.18)"
+    versionRange="[1.18.1,1.19)"
     ordering="NONE"
     side="BOTH"

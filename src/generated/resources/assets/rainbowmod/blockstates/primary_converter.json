@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "rainbowmod:block/primary_converter"
+    }
+  }
+}

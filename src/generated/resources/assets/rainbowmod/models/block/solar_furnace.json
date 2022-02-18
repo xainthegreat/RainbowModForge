@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "rainbowmod:block/solar_furnace_top",
+    "up": "rainbowmod:block/solar_furnace_top",
+    "north": "rainbowmod:block/solar_furnace",
+    "south": "rainbowmod:block/solar_furnace_side",
+    "east": "rainbowmod:block/solar_furnace_side",
+    "west": "rainbowmod:block/solar_furnace_side"
+  }
+}

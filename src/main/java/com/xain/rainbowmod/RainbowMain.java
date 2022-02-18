@@ -39,12 +39,5 @@ public class RainbowMain
 
     }
 
-    //todo move this into a setup class?
-    public static final CreativeModeTab TAB_RAINBOW = new CreativeModeTab("rainbowmod") {
-        @Override
-        public ItemStack makeIcon() {
-            return new ItemStack(Registration.PRISM.get());
-        }
-    };
 
 }

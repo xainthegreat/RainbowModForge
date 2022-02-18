@@ -10,6 +10,8 @@ import net.minecraft.data.HashCache;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.DynamicLoot;
@@ -39,18 +41,18 @@ public class LootTables extends LootTableProvider {
     public void run(HashCache cache) {
         Map<ResourceLocation, LootTable> tables = new HashMap<>();
         tables.put(Registration.EXAMPLE_GENERATOR.get().getLootTable(), createStandardTable(
-                "example_generator", Registration.EXAMPLE_GENERATOR.get()).setParamSet(LootContextParamSets.BLOCK).build());
+                "example_generator", Registration.EXAMPLE_GENERATOR.get(), Registration.EXAMPLE_GENERATOR_ENTITY.get()).setParamSet(LootContextParamSets.BLOCK).build());
         tables.put(Registration.SOLAR_TEST.get().getLootTable(), createStandardTable(
-                "solar_test", Registration.SOLAR_TEST.get()).setParamSet(LootContextParamSets.BLOCK).build());
+                "solar_test", Registration.SOLAR_TEST.get(), Registration.SOLAR_TEST_ENTITY.get()).setParamSet(LootContextParamSets.BLOCK).build());
         tables.put(Registration.PRIMARY_CONVERTER.get().getLootTable(), createStandardTable(
-                "primary_converter", Registration.PRIMARY_CONVERTER.get()).setParamSet(LootContextParamSets.BLOCK).build());
+                "primary_converter", Registration.PRIMARY_CONVERTER.get(), Registration.PRIMARY_CONVERTER_ENTITY.get()).setParamSet(LootContextParamSets.BLOCK).build());
 //        tables.put(Registration.DEMO.get().getLootTable(), createStandardTable(
 //                "demo", Registration.DEMO.get()).setParamSet(LootContextParamSets.BLOCK).build());
         writeTables(cache, tables);
     }
 
     //todo change "light" back to "energy" or split them so one is for power and one is for light
-    protected LootTable.Builder createStandardTable(String name, Block block) {
+    protected LootTable.Builder createStandardTable(String name, Block block, BlockEntityType<?> type) {
         LootPool.Builder builder = LootPool.lootPool()
                 .name(name)
                 .setRolls(ConstantValue.exactly(1))
@@ -60,7 +62,7 @@ public class LootTables extends LootTableProvider {
                                 .copy("inv", "BlockEntityTag.inv", CopyNbtFunction.MergeStrategy.REPLACE)
                                 .copy("light", "BlockEntityTag.light", CopyNbtFunction.MergeStrategy.REPLACE)
                                 .copy("energy", "BlockEntityTag.energy", CopyNbtFunction.MergeStrategy.REPLACE))
-                        .apply(SetContainerContents.setContents()
+                        .apply(SetContainerContents.setContents(type)
                                 .withEntry(DynamicLoot.dynamicEntry(new ResourceLocation("minecraft", "contents"))))
                 );
 

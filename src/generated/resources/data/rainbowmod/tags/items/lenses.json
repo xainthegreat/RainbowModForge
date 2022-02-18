@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "rainbowmod:clear_lens",
+    "rainbowmod:red_lens",
+    "rainbowmod:yellow_lens",
+    "rainbowmod:blue_lens",
+    "rainbowmod:orange_lens",
+    "rainbowmod:purple_lens",
+    "rainbowmod:green_lens",
+    "rainbowmod:cyan_lens",
+    "rainbowmod:magenta_lens",
+    "rainbowmod:lime_lens",
+    "rainbowmod:pink_lens",
+    "rainbowmod:light_blue_lens",
+    "rainbowmod:brown_lens",
+    "rainbowmod:light_gray_lens",
+    "rainbowmod:gray_lens",
+    "rainbowmod:black_lens"
+  ]
+}

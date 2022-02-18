@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "rainbowmod:block/example_generator",
+    "up": "rainbowmod:block/example_generator",
+    "north": "rainbowmod:block/example_generator_front",
+    "south": "rainbowmod:block/example_generator",
+    "east": "rainbowmod:block/example_generator",
+    "west": "rainbowmod:block/example_generator"
+  }
+}

@@ -55,7 +55,7 @@ public class SolarTestContainer extends AbstractContainerMenu {
 
             @Override
             public void set(int value) {
-                blockEntity.getCapability(CapabilityLight.LIGHT).ifPresent(h -> {
+                blockEntity.getCapability(CapabilityLight.LIGHT_STORAGE_CAPABILITY).ifPresent(h -> {
                     int lightStored = h.getLightStored() & 0xffff0000;
                     h.setLight(lightStored + (value & 0xffff));
                 });
@@ -69,7 +69,7 @@ public class SolarTestContainer extends AbstractContainerMenu {
 
             @Override
             public void set(int value) {
-                blockEntity.getCapability(CapabilityLight.LIGHT).ifPresent(h -> {
+                blockEntity.getCapability(CapabilityLight.LIGHT_STORAGE_CAPABILITY).ifPresent(h -> {
                     int lightStored = h.getLightStored() & 0x0000ffff;
                     h.setLight(lightStored | (value << 16));
                 });
@@ -78,7 +78,7 @@ public class SolarTestContainer extends AbstractContainerMenu {
     }
 
     public int getLight() {
-        return blockEntity.getCapability(CapabilityLight.LIGHT).map(LightStorage::getLightStored).orElse(0);
+        return blockEntity.getCapability(CapabilityLight.LIGHT_STORAGE_CAPABILITY).map(LightStorage::getLightStored).orElse(0);
     }
 
     @Override
