@@ -6,13 +6,11 @@ import com.xain.rainbowmod.tools.LightStorage;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -24,21 +22,21 @@ public class SolarTestEntity extends BlockEntity {
         super(Registration.SOLAR_TEST_ENTITY.get(), pos, state);
     }
 
-    private final LightStorage lightStorage = createLightStorage();
+    private final LightStorage lightHandler = createLightStorage();
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
-    private final LazyOptional<LightStorage> light = LazyOptional.of(() -> lightStorage);
+    private final LazyOptional<LightStorage> light = LazyOptional.of(() -> lightHandler);
 
     private void sendOutLight() {
-        AtomicInteger capacity = new AtomicInteger(lightStorage.getLightStored());
+        AtomicInteger capacity = new AtomicInteger(lightHandler.getLightStored());
         if (capacity.get() > 0) {
             for (Direction direction : Direction.values()) {
                 BlockEntity entityToCheck = level.getBlockEntity(worldPosition.relative(direction));
                 if (entityToCheck != null) {
-                    boolean doContinue = entityToCheck.getCapability(CapabilityLight.LIGHT, direction).map(handler -> {
+                    boolean doContinue = entityToCheck.getCapability(CapabilityLight.LIGHT_STORAGE_CAPABILITY, direction).map(handler -> {
                                 if (handler.canReceive()) {
                                     int received = handler.receiveLight(Math.min(capacity.get(), 1), false);
                                     capacity.addAndGet(-received);
-                                    lightStorage.consumeLight(received);
+                                    lightHandler.consumeLight(received);
                                     setChanged();
                                     return capacity.get() > 0;
                                 } else {
@@ -66,8 +64,8 @@ public class SolarTestEntity extends BlockEntity {
 //        level.getBlockTicks().scheduleTick();// todo delay light increases to a couple seconds per light absorption
         if (level.canSeeSky(worldPosition.above()) && level.isDay()) {
             level.getBlockTicks();
-            lightStorage.receiveLight(1, false);
-            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+            lightHandler.receiveLight(1, false);
+            level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
             setChanged();
         }
 
@@ -77,16 +75,15 @@ public class SolarTestEntity extends BlockEntity {
 
     @Override
     public void load(CompoundTag tag) {
-        lightStorage.deserializeNBT(tag.get("light"));
-
+        if(tag.contains("light")){
+            lightHandler.deserializeNBT(tag.get("light"));
+        }
         super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
-        tag.put("light", lightStorage.serializeNBT());
-
-        return super.save(tag);
+    public void saveAdditional(CompoundTag tag) {
+        tag.put("light", lightHandler.serializeNBT());
     }
 
     private LightStorage createLightStorage() {
@@ -102,7 +99,7 @@ public class SolarTestEntity extends BlockEntity {
     @Nonnull
     @Override
     public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-        if (cap == CapabilityLight.LIGHT) {
+        if (cap == CapabilityLight.LIGHT_STORAGE_CAPABILITY) {
             return light.cast();
         }
         return super.getCapability(cap, side);

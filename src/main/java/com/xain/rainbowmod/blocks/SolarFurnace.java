@@ -26,8 +26,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,10 +35,9 @@ public class SolarFurnace extends Block implements EntityBlock {
 
     public SolarFurnace() {
         super(Properties.of(Material.STONE)
+                .requiresCorrectToolForDrops() //todo add to requiresiron tag or whatever
                 .sound(SoundType.STONE)
-                .strength(2.0f)
-                .harvestTool(ToolType.PICKAXE)
-                .harvestLevel(2));
+                .strength(2.0f));
     }
 
     @Nullable

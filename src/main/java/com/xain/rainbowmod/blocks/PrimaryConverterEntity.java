@@ -10,10 +10,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -30,11 +30,11 @@ public class PrimaryConverterEntity extends BlockEntity {
 // todo update handlers and load/save also add what the block is going to do...
 
     private final ItemStackHandler itemHandler = createHandler();
-    private final LightStorage lightStorage = createLightStorage();
+    private final LightStorage lightHandler = createLightStorage();
 
     // Never create lazy optionals in getCapability. Always place them as fields in the tile entity:
     private final LazyOptional<IItemHandler> handler = LazyOptional.of(() -> itemHandler);
-    private final LazyOptional<LightStorage> light = LazyOptional.of(() -> lightStorage);
+    private final LazyOptional<LightStorage> light = LazyOptional.of(() -> lightHandler);
 
     private static final int CONVERT_TIME = 600; // 30 seconds default? //todo add to a config some how?
     public static final int USAGE = 10; //todo configurable
@@ -66,7 +66,7 @@ public class PrimaryConverterEntity extends BlockEntity {
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         CompoundTag tag = new CompoundTag();
         tag.putBoolean("hasLight", hasLight);
-        return new ClientboundBlockEntityDataPacket(worldPosition, 1, tag);
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class PrimaryConverterEntity extends BlockEntity {
                 }
 
                 if (hasEnoughLightToWork()) {
-                    lightStorage.consumeLight(USAGE); // todo make it take light during production instead of a lump sum?
+                    lightHandler.consumeLight(USAGE); // todo make it take light during production instead of a lump sum?
                     lensCheck = installedLens;
                     counter = 20; //todo set to CONVERT_TIME
                     toGive = null;
@@ -134,7 +134,7 @@ public class PrimaryConverterEntity extends BlockEntity {
     }
 
     private boolean hasEnoughLightToWork() {
-        return lightStorage.getLightStored() >= USAGE;
+        return lightHandler.getLightStored() >= USAGE;
     }
 
     private String checkColor(ItemStack stack) {
@@ -194,18 +194,20 @@ public class PrimaryConverterEntity extends BlockEntity {
 
     @Override
     public void load(CompoundTag tag) {
-        itemHandler.deserializeNBT(tag.getCompound("inv"));
-        lightStorage.deserializeNBT(tag.get("light"));
+        if (tag.contains("inv")){
+            itemHandler.deserializeNBT(tag.getCompound("inv"));
+        }
+        if (tag.contains("light")){
+            lightHandler.deserializeNBT(tag.get("light"));
+        }
 
         super.load(tag);
     }
 
     @Override
-    public CompoundTag save(CompoundTag tag) {
+    public void saveAdditional(CompoundTag tag) {
         tag.put("inv", itemHandler.serializeNBT());
-        tag.put("light", lightStorage.serializeNBT());
-
-        return super.save(tag);
+        tag.put("light", lightHandler.serializeNBT());
     }
 
     private ItemStackHandler createHandler() {
@@ -257,7 +259,7 @@ public class PrimaryConverterEntity extends BlockEntity {
                 boolean newHasLight = hasEnoughLightToWork();
                 if (newHasLight != hasLight) {
                     hasLight = newHasLight;
-                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+                    level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
                 }
                 setChanged();
             }
@@ -270,7 +272,7 @@ public class PrimaryConverterEntity extends BlockEntity {
         if (cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return handler.cast();
         }
-        if (cap == CapabilityLight.LIGHT) {
+        if (cap == CapabilityLight.LIGHT_STORAGE_CAPABILITY) {
             return light.cast();
         }
         return super.getCapability(cap, side);

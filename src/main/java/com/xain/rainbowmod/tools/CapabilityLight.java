@@ -1,17 +1,10 @@
 package com.xain.rainbowmod.tools;
 
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 
 public class CapabilityLight {
 
-    @CapabilityInject(LightStorage.class)
-    public static Capability<LightStorage> LIGHT = null;
-
-    public static void register()
-    {
-        CapabilityManager.INSTANCE.register(LightStorage.class);
-    }
-
+    public static Capability<LightStorage> LIGHT_STORAGE_CAPABILITY = CapabilityManager.get(new CapabilityToken<>(){});
 }

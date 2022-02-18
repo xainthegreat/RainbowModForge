@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "rainbowmod:example_generator",
+    "rainbowmod:demo_block",
+    "rainbowmod:solar_test"
+  ]
+}

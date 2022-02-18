@@ -3,7 +3,6 @@ package com.xain.rainbowmod.setup;
 import com.xain.rainbowmod.RainbowMain;
 import com.xain.rainbowmod.blocks.*;
 import com.xain.rainbowmod.items.ExampleItem;
-import com.xain.rainbowmod.tools.CapabilityLight;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -17,7 +16,7 @@ public class ClientSetup {
 
     public static void setup(final FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            CapabilityLight.register(); // todo is the right place to init a Capability?
+//            CapabilityLight.register(); // todo is the right place to init a Capability? //todo remove?
 
             ItemBlockRenderTypes.setRenderLayer(Registration.DEMO_BLOCK.get(), RenderType.translucent());// makes see-through (add noOcclusion to properties if you want to see other blocks through this one, can use cutout to add items with open air, like dynamos.
             MenuScreens.register(Registration.EXAMPLE_GENERATOR_CONTAINER.get(), ExampleGeneratorScreen::new);

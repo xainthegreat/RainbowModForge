@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "rainbowmod:block/solar_furnace",
+      "x": 90
+    },
+    "facing=up": {
+      "model": "rainbowmod:block/solar_furnace",
+      "x": -90
+    },
+    "facing=north": {
+      "model": "rainbowmod:block/solar_furnace"
+    },
+    "facing=south": {
+      "model": "rainbowmod:block/solar_furnace",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "rainbowmod:block/solar_furnace",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "rainbowmod:block/solar_furnace",
+      "y": 90
+    }
+  }
+}

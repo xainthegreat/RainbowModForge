@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "rainbowmod:items/example_item0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "rainbowmod:distance": 0.0
+      },
+      "model": "rainbowmod:item/example_item0"
+    },
+    {
+      "predicate": {
+        "rainbowmod:distance": 1.0
+      },
+      "model": "rainbowmod:item/example_item1"
+    },
+    {
+      "predicate": {
+        "rainbowmod:distance": 2.0
+      },
+      "model": "rainbowmod:item/example_item2"
+    },
+    {
+      "predicate": {
+        "rainbowmod:distance": 3.0
+      },
+      "model": "rainbowmod:item/example_item3"
+    }
+  ]
+}

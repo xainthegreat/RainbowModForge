@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "rainbowmod:white_droplet",
+    "rainbowmod:red_droplet",
+    "rainbowmod:yellow_droplet",
+    "rainbowmod:blue_droplet",
+    "rainbowmod:orange_droplet",
+    "rainbowmod:purple_droplet",
+    "rainbowmod:green_droplet",
+    "rainbowmod:cyan_droplet",
+    "rainbowmod:magenta_droplet",
+    "rainbowmod:lime_droplet",
+    "rainbowmod:pink_droplet",
+    "rainbowmod:light_blue_droplet",
+    "rainbowmod:brown_droplet",
+    "rainbowmod:light_gray_droplet",
+    "rainbowmod:gray_droplet",
+    "rainbowmod:black_droplet"
+  ]
+}
